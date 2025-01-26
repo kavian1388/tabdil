@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تبدیل صدا به متن</title>
+    <style>
+        body {
+            font-family: "Tahoma", sans-serif;
+            direction: rtl;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+        }
+
+        #container {
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 15px 25px;
+            margin: 10px 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #stop-btn {
+            background-color: #dc3545;
+        }
+
+        #stop-btn:hover {
+            background-color: #c82333;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            color: #333;
+            font-size: 16px;
+            white-space: pre-wrap;
+            min-height: 150px;
+            overflow-y: auto;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img src="photo_2025-01-24_10-25-12.jpg" alt="تبدیل صدا به متن">
+        <h1>تبدیل صدا به متن</h1>
+        <button id="start-btn">شروع ضبط</button>
+        <button id="stop-btn" style="display: none;">توقف ضبط</button>
+        <div id="output" contenteditable="true" placeholder="نتایج اینجا نمایش داده می‌شوند..."></div>
+        <footer>مرورگر شما باید از Web Speech API پشتیبانی کند.</footer>
+    </div>
+
+    <script>
+        const startBtn = document.getElementById("start-btn");
+        const stopBtn = document.getElementById("stop-btn");
+        const outputDiv = document.getElementById("output");
+
+        let recognition;
+
+        // بررسی پشتیبانی مرورگر
+        if ("webkitSpeechRecognition" in window) {
+            recognition = new webkitSpeechRecognition();
+        } else if ("SpeechRecognition" in window) {
+            recognition = new SpeechRecognition();
+        } else {
+            alert("مرورگر شما از Web Speech API پشتیبانی نمی‌کند.");
+        }
+
+        if (recognition) {
+            recognition.lang = "fa-IR"; // تنظیم زبان به فارسی
+            recognition.continuous = true; // ضبط مداوم
+            recognition.interimResults = false; // فقط نتایج نهایی
+
+            recognition.onstart = () => {
+                if (outputDiv.textContent === "در حال گوش دادن...") {
+                    outputDiv.textContent = "";
+                }
+            };
+
+            recognition.onresult = (event) => {
+                let transcript = "";
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript + " ";
+                }
+                // اضافه کردن متن جدید به متن قبلی
+                outputDiv.textContent += transcript.trim() + " ";
+            };
+
+            recognition.onerror = (event) => {
+                alert("خطا رخ داده است: " + event.error);
+            };
+
+            recognition.onend = () => {
+                startBtn.style.display = "inline-block";
+                stopBtn.style.display = "none";
+            };
+        }
+
+        startBtn.addEventListener("click", () => {
+            if (recognition) {
+                recognition.start();
+                startBtn.style.display = "none";stopBtn.style.display = "inline-block";
+            }
+        });
+
+        stopBtn.addEventListener("click", () => {
+            if (recognition) {
+                recognition.stop();
+                startBtn.style.display = "inline-block";
+                stopBtn.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>

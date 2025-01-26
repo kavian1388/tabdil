@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تایید عضویت</title>
+    <style>
+        body {
+            font-family: "Tahoma", sans-serif;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fbfbf9, #fbfbf9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .step a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        .step a:hover {
+            color: #0056b3;
+        }
+
+        .checkbox {
+            width: 100px;
+            height: 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #fff;
+            background-color: #ccc; /* خاکستری اولیه */
+            cursor: default;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .checkbox.processing {
+            background-color: #f39c12; /* زرد "در حال بررسی" */
+        }
+
+        .checkbox.checked {
+            background-color: #28a745; /* سبز */
+            color: white;
+        }
+
+        #confirm-btn {
+            display: none;
+            margin-top: 20px;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #confirm-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>برای استفاده از سایت، کانال و پیج ما را دنبال کنید</h1>
+        
+        <!-- مرحله اول -->
+        <div class="step">
+            <a href="https://instagram.com/hmka_com" target="_blank" id="insta-link">پیج اینستاگرام</a>
+            <div class="checkbox" id="insta-check"></div>
+        </div>
+        
+        <!-- مرحله دوم -->
+        <div class="step">
+            <a href="https://www.youtube.com/@Hmka_com" target="_blank" id="youtube-link">کانال یوتیوب</a>
+            <div class="checkbox" id="youtube-check"></div>
+        </div>
+        
+        <!-- دکمه تایید -->
+        <button id="confirm-btn">تایید</button>
+    </div>
+
+    <script>
+        const instaLink = document.getElementById("insta-link");
+        const youtubeLink = document.getElementById("youtube-link");
+        const instaCheck = document.getElementById("insta-check");
+        const youtubeCheck = document.getElementById("youtube-check");
+        const confirmBtn = document.getElementById("confirm-btn");
+
+        let instaCompleted = false;
+        let youtubeCompleted = false;
+
+        // وقتی روی لینک اینستاگرام کلیک شد
+        instaLink.addEventListener("click", () => {
+            instaCheck.textContent = "در حال بررسی";
+            instaCheck.classList.add("processing");
+
+            setTimeout(() => {
+                instaCompleted = true;
+                instaCheck.classList.remove("processing");
+                instaCheck.classList.add("checked");
+                instaCheck.textContent = "تایید شد";
+                checkCompletion();}, 30000); // ۳۰ ثانیه
+        });
+
+        // وقتی روی لینک یوتیوب کلیک شد
+        youtubeLink.addEventListener("click", () => {
+            youtubeCheck.textContent = "در حال بررسی";
+            youtubeCheck.classList.add("processing");
+
+            setTimeout(() => {
+                youtubeCompleted = true;
+                youtubeCheck.classList.remove("processing");
+                youtubeCheck.classList.add("checked");
+                youtubeCheck.textContent = "تایید شد";
+                checkCompletion();
+            }, 30000); // ۳۰ ثانیه
+        });
+
+        // بررسی کامل شدن هر دو مرحله
+        function checkCompletion() {
+            if (instaCompleted && youtubeCompleted) {
+                confirmBtn.style.display = "block";
+            }
+        }
+
+        // وقتی دکمه تایید کلیک شد
+        confirmBtn.addEventListener("click", () => {
+            window.location.href = "http://127.0.0.1:3000/nv13.html"; // لینک مقصد را اینجا قرار دهید
+        });
+    </script>
+</body>
+</html>

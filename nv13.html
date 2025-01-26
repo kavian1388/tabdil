@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ابزارهای تبدیل</title>
+    <style>
+        body {
+            font-family: "Tahoma", sans-serif;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fbfbf9, #fbfbf9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none; /* حذف زیرخط لینک */
+            color: inherit;
+        }
+
+        .option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .option img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            border: 2px solid #007bff;
+        }
+
+        .option h2 {
+            font-size: 18px;
+            color: #333;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- گزینه ۱ -->
+        <a href="http://127.0.0.1:3000/nv6.html" class="option">
+            <img src="ca1ac9a6-fca3-4f76-9c65-44c436156d4e.webp" alt="تبدیل عکس به متن">
+            <h2>تبدیل عکس به متن</h2>
+        </a>
+
+        <!-- گزینه ۲ -->
+        <a href="http://127.0.0.1:3000/nv5.html" class="option">
+            <img src="unnamed2.png" alt="تبدیل عکس به PDF">
+            <h2>تبدیل عکس به PDF</h2>
+        </a>
+
+        <!-- گزینه ۳ -->
+        <a href="http://127.0.0.1:3000/nv14.html" class="option">
+            <img src="photo_2025-01-24_10-25-12.jpg" alt="تبدیل صدا به متن">
+            <h2>تبدیل صدا به متن</h2>
+        </a>
+
+        <!-- گزینه ۴ -->
+        <a href="http://127.0.0.1:3728" class="option">
+            <img src="photo_2025-01-25_08-57-03.jpg" alt="تبدیل PDF به Word">
+            <h2>تبدیل PDF به Word</h2>
+        </a>
+    </div>
+</body>
+</html>

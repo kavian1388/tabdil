@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تبدیل عکس به PDF</title>
+    <style>
+        body {
+            font-family: "Tahoma", sans-serif;
+            direction: rtl;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        #container {
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .pdf-icon {
+            max-width: 120px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            display: inline-block;
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        label:hover {
+            background-color: #0056b3;
+        }
+
+        button {
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #convert-btn,
+        #download-btn {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- نمایش عکس PDF -->
+        <img src="unnamed2.png" alt="PDF Icon" class="pdf-icon">
+        <h1>تبدیل عکس به PDF</h1>
+        <label for="image-input">انتخاب عکس</label>
+        <input type="file" id="image-input" accept="image/*" multiple>
+        <button id="convert-btn">تبدیل به PDF</button>
+        <button id="download-btn">دانلود PDF</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        const imageInput = document.getElementById("image-input");
+        const convertBtn = document.getElementById("convert-btn");
+        const downloadBtn = document.getElementById("download-btn");
+
+        let selectedFiles = [];
+
+        // نمایش دکمه تبدیل پس از انتخاب عکس
+        imageInput.addEventListener("change", (event) => {
+            selectedFiles = Array.from(event.target.files);
+            if (selectedFiles.length > 0) {
+                convertBtn.style.display = "inline-block";
+            }
+        });
+
+        // تبدیل عکس‌ها به PDF
+        convertBtn.addEventListener("click", async () => {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+
+            for (let i = 0; i < selectedFiles.length; i++) {
+                const file = selectedFiles[i];
+                const imgData = await toBase64(file);
+
+                const img = new Image();
+                img.src = imgData;
+
+                await new Promise((resolve) => {
+                    img.onload = () => {
+                        const imgWidth = 210; // عرض صفحه A4
+                        const imgHeight = (img.height * imgWidth) / img.width;
+                        if (i > 0) pdf.addPage();
+                        pdf.addImage(img, "JPEG", 0, 0, imgWidth, imgHeight);
+                        resolve();
+                    };
+                });
+            }
+
+            // ذخیره PDF به صورت Blob
+            const pdfBlob = pdf.output("blob");
+            const pdfUrl = URL.
+            createObjectURL(pdfBlob);
+
+            // نمایش دکمه دانلود
+            downloadBtn.style.display = "inline-block";
+            downloadBtn.onclick = () => {
+                const link = document.createElement("a");
+                link.href = pdfUrl;
+                link.download = "خروجی.pdf";
+                link.click();
+            };
+        });
+
+        // تبدیل فایل به Base64
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = (error) => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
+</body>
+</html>

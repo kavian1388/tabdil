@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تبدیل PDF به Word</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="photo_2025-01-25_04-42-35 (2).png"  class="photo_2025-01-25_04-42-35">
+            <h1>تبدیل PDF به Word</h1>
+        </div>
+        <form id="upload-form">
+            <label for="file-input" class="file-label">
+                <span class="custom-file-button">انتخاب فایل</span>
+                <span id="file-name" class="file-name">هیچ فایلی انتخاب نشده است</span>
+            </label>
+            <input type="file" name="file" id="file-input" accept=".pdf" required>
+            <button type="submit" class="submit-button" style="display: none;">تبدیل</button>
+        </form>
+        <div id="progress-container" style="display: none;">
+            <p>در حال تبدیل...</p>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <p id="progress-text">۰%</p>
+        </div>
+        <div id="download-link" style="display: none;">
+            <a href="#" id="download-btn">دانلود فایل Word</a>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
